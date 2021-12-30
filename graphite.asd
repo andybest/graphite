@@ -2,10 +2,12 @@
   :version "0.1.0"
   :author ""
   :license ""
-  :depends-on (#:alexandria #:cl-cairo2 #:opticl #:veq)
+  :depends-on (#:alexandria #:cmu-infix #:cl-cairo2 #:cl-gd #:veq)
   :components ((:module "src"
                 :components
                 ((:file "packages")
+                 (:file "init")
+                 (:file "utils")
                  (:file "render/renderer")
                  (:file "render/bitmap-renderer"))))
   :description ""
