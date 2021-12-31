@@ -16,4 +16,7 @@
   (:export :with-aref))
 
 (defpackage #:render
-  (:use #:common-lisp #:color #:utils))
+  (:use #:common-lisp))
+
+(defpackage #:bitmap-renderer
+  (:use #:common-lisp #:color #:render #:utils))

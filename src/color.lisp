@@ -1,3 +1,5 @@
+;;;; Utilities to create and convert colors in a variety of different color spaces
+
 (in-package :color)
 
 (defmacro rgb (r g b)
@@ -30,5 +32,6 @@
 
 (defun rgba-to-byte (c)
   "Converts floating point RGBA values to integer values normalised between 0-255"
-  (map 'vector (lambda (x) (floor (alexandria:clamp x 0.0 255.0)))
+  (map 'vector
+       (lambda (x) (floor (alexandria:clamp x 0.0 255.0)))
        (rtg-math.vector4:*s c 255.0)))

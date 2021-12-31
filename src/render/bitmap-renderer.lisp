@@ -1,4 +1,4 @@
-(in-package :render)
+(in-package :bitmap-renderer)
 
 (defclass bitmap-renderer (renderer)
   ((width :accessor br-width
@@ -29,4 +29,4 @@
   (setf (br-blend-mode br) mode))
 
 (defmethod point ((br bitmap-renderer) x y color)
-   (br-blend-pixel br x y color))
+   (br-blend-pixel br x y (color:rgba-to-byte color)))
