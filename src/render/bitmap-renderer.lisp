@@ -1,4 +1,4 @@
-(in-package :bitmap-renderer)
+(in-package :renderer.bitmap)
 
 (defclass bitmap-renderer (renderer)
   ((width :accessor br-width
@@ -10,7 +10,7 @@
    (blend-mode :accessor br-blend-mode
                :initform :blend)))
 
-(defun make-bitmap-renderer (width height)
+(defun make-renderer (width height)
   (make-instance 'bitmap-renderer
                  :width width
                  :height height

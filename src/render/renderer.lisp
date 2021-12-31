@@ -1,4 +1,4 @@
-(in-package :render)
+(in-package :renderer)
 
 (defclass renderer () ())
 
