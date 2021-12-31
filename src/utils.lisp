@@ -1,7 +1,7 @@
 (in-package :utils)
 
 (defmacro with-aref ((&rest indices) array &body body)
-  "Allows for destructuring of arrays"
+  "Allows for destructuring of arrays (like destructuring-bind)"
   (let ((a (gensym)))
    `(let ((,a ,array))
       (symbol-macrolet
