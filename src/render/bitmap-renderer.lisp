@@ -14,7 +14,7 @@
   (make-instance 'bitmap-renderer
                  :width width
                  :height height
-                 :image (opticl-core:make-32bit-rgb-image height width)))
+                 :image (opticl:make-32-bit-rgb-image height width)))
 
 (defun br-get-pixel (br x y)
   "Get a pixel from the renderer's graphics buffer"
@@ -25,10 +25,8 @@
   (let ((dest (opticl:pixel (br-image br) y x)))
     (setf (opticl:pixel (br-image br) y x) (blend-pixel (br-blend-mode br) color dest))))
 
-
-
 (defmethod set-blend-mode ((br bitmap-renderer) mode)
   (setf (br-blend-mode br) mode))
 
-;; (defmethod point ((br bitmap-renderer) x y)
-;;   (br-blend-pixel br x y))
+(defmethod point ((br bitmap-renderer) x y color)
+   (br-blend-pixel br x y color))
