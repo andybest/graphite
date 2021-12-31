@@ -9,6 +9,7 @@
                  (:file "init")
                  (:file "color")
                  (:file "utils")
+                 (:file "render/blend")
                  (:file "render/renderer")
                  (:file "render/bitmap-renderer"))))
   :description ""

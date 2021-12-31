@@ -1,4 +1,6 @@
-(in-package :render)
+(in-package :renderer)
+
+(named-readtables:in-readtable cmu-infix:syntax)
 
 (defun blend-pixel (mode src dest)
   "Blends source RGBA pixel onto a destination RGB pixel given a particular blend mode"
