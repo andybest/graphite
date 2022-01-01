@@ -1,6 +1,6 @@
 (in-package :renderer.bitmap)
 
-(defclass bitmap-renderer (renderer)
+(defclass bitmap-renderer (renderer:renderer)
   ((width :accessor br-width
           :initarg :width)
    (height :accessor br-height
@@ -10,11 +10,11 @@
    (blend-mode :accessor br-blend-mode
                :initform :blend)))
 
-(defun make-renderer (width height)
+(defun make-bitmap-renderer (width height)
   (make-instance 'bitmap-renderer
                  :width width
                  :height height
-                 :image (opticl:make-32-bit-rgb-image height width)))
+                 :image (opticl:make-8-bit-rgb-image height width)))
 
 (defun br-get-pixel (br x y)
   "Get a pixel from the renderer's graphics buffer"
@@ -30,3 +30,7 @@
 
 (defmethod point ((br bitmap-renderer) x y color)
    (br-blend-pixel br x y (color:rgba-to-byte color)))
+
+(defun save-png (br path)
+  "Save the renderer's graphics buffer to a PNG file at the specified path"
+  (opticl:write-png-file path (br-image br)))

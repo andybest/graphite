@@ -21,7 +21,8 @@
                   (vector
                    #I(((alpha * r2 + invalpha * r1) >> 8) & #xff)
                    #I(((alpha * g2 + invalpha * g1) >> 8) & #xff)
-                   #I(((alpha * b2 + invalpha * b1) >> 8) & #xff))))))
+                   #I(((alpha * b2 + invalpha * b1) >> 8) & #xff)
+                   255)))))
 
     ; Additive blending
     (:add (utils:with-aref (r1 b1 g1) dest
@@ -29,4 +30,5 @@
               (vector
                (min 255 (+ r1 r2))
                (min 255 (+ g1 g2))
-               (min 255 (+ b1 b2))))))))
+               (min 255 (+ b1 b2))
+               255))))))
