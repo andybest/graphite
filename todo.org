@@ -1,0 +1,4 @@
+* Inbox
+** TODO This is likely incredibly inefficient. Need to find a way to work with the multiple values directly.
+
+[[file:./graphite/src/render/bitmap-renderer.lisp::multiple-value-bind (r g b) (opticl:pixel (br-image br) y x]]

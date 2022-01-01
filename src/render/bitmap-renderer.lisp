@@ -22,8 +22,10 @@
 
 (defun br-blend-pixel (br x y color)
   "Blends an RGBA pixel into the renderer's RGB graphics buffer according to the current blend mode"
-  (let ((dest (opticl:pixel (br-image br) y x)))
-    (setf (opticl:pixel (br-image br) y x) (blend-pixel (br-blend-mode br) color dest))))
+    (multiple-value-bind (r g b) (opticl:pixel (br-image br) y x)
+      (setf (opticl:pixel (br-image br) y x)
+            (utils:with-aref (r g b) (renderer:blend-pixel (br-blend-mode br) color (vector r g b))
+              (values-list (list r g b))))))
 
 (defmethod set-blend-mode ((br bitmap-renderer) mode)
   (setf (br-blend-mode br) mode))
