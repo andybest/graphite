@@ -30,8 +30,8 @@
 (defmethod set-blend-mode ((br bitmap-renderer) mode)
   (setf (br-blend-mode br) mode))
 
-(defmethod point ((br bitmap-renderer) x y color)
-   (br-blend-pixel br x y (color:rgba-to-byte color)))
+(defmethod point ((br bitmap-renderer) x y)
+   (br-blend-pixel br x y (color:rgba-to-byte (renderer:stroke-color br))))
 
 (defun save-png (br path)
   "Save the renderer's graphics buffer to a PNG file at the specified path"

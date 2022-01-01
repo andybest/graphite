@@ -18,9 +18,13 @@
 (defpackage #:renderer
   (:use #:common-lisp)
   (:export :renderer
+           :fill-enabled
+           :fill-color
+           :stroke-enabled
+           :stroke-color
            :blend-pixel))
 
 (defpackage #:renderer.bitmap
-  (:use #:common-lisp #:color
+  (:use #:common-lisp #:color)
   (:export :bitmap-renderer
            :make-bitmap-renderer))
