@@ -14,7 +14,7 @@
   (make-instance 'bitmap-renderer
                  :width width
                  :height height
-                 :image (opticl:make-8-bit-rgb-image height width)))
+                 :image (opticl:make-double-float-rgb-image height width)))
 
 (defun br-get-pixel (br x y)
   "Get a pixel from the renderer's graphics buffer"
@@ -27,6 +27,7 @@
             (utils:with-aref (r g b) (renderer:blend-pixel (br-blend-mode br) color (vector r g b))
               (values-list (list r g b))))))
 
+
 (defmethod set-blend-mode ((br bitmap-renderer) mode)
   (setf (br-blend-mode br) mode))
 
@@ -35,4 +36,5 @@
 
 (defun save-png (br path)
   "Save the renderer's graphics buffer to a PNG file at the specified path"
-  (opticl:write-png-file path (br-image br)))
+  (let ((image-8bit-rgb (opticl:convert-image-to-rgb (br-image br))))
+    (opticl:write-png-file path (br-image br))))

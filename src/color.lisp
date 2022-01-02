@@ -33,5 +33,9 @@
 (defun rgba-to-byte (c)
   "Converts floating point RGBA values to integer values normalised between 0-255"
   (map 'vector
-       (lambda (x) (unsigned-byte (alexandria:clamp x 0.0 255.0)))
+       (lambda (x) (floor (alexandria:clamp x 0.0 255.0)))
        (rtg-math.vector4:*s c 255.0)))
+
+(defun clamp (c)
+  "Clamps the given color within the range of 0.0 to 1.0"
+  (map 'vector (lambda (x) (min (max 0.0 x) 1.0)) c))
