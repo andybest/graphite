@@ -14,7 +14,7 @@
   (make-instance 'bitmap-renderer
                  :width width
                  :height height
-                 :image (opticl:make-double-float-rgb-image height width)))
+                 :image (opticl:make-single-float-rgb-image height width)))
 
 (defun br-get-pixel (br x y)
   "Get a pixel from the renderer's graphics buffer"

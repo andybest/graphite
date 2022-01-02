@@ -2,7 +2,7 @@
   (:use #:common-lisp))
 
 (defpackage #:color
-  (:use #:common-lisp)
+  (:use #:common-lisp #:rtg-math)
   (:export :rgb
            :rgba
            :hsl
@@ -16,7 +16,7 @@
   (:export :with-aref))
 
 (defpackage #:renderer
-  (:use #:common-lisp)
+  (:use #:common-lisp #:rtg-math)
   (:export :renderer
            :fill-enabled
            :fill-color
