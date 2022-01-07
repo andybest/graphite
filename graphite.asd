@@ -11,7 +11,8 @@
                  (:file "utils")
                  (:file "render/blend")
                  (:file "render/renderer")
-                 (:file "render/bitmap-renderer"))))
+                 (:file "render/bitmap-renderer")
+                 (:file "render/cairo-renderer"))))
   :description ""
   :in-order-to ((test-op (test-op "graphite/tests"))))
 

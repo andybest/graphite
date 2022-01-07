@@ -28,3 +28,7 @@
   (:use #:common-lisp #:color)
   (:export :bitmap-renderer
            :make-bitmap-renderer))
+
+
+(defpackage #:renderer.cairo
+  (:use #:common-lisp #:renderer #:utils))
