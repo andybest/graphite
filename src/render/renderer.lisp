@@ -42,3 +42,17 @@
 
 (defgeneric pop-matrix (renderer)
   (:documentation "Restores the transformation matrix from the stack"))
+
+
+;; Vector operations
+
+(defun point-v (renderer p)
+  "Draw a point at the coordinates specified by the vector P"
+  (with-aref (x y) p
+    (point renderer x y)))
+
+(defun line-v (renderer p1 p2)
+  "Draw a point between the coordinates specified by vectors P1 and P2"
+  (with-aref (x1 y1) p1
+    (with-aref (x2 y2) p2
+      (line renderer x1 y1 x2 y2))))

@@ -16,7 +16,7 @@
   (:export :with-aref))
 
 (defpackage #:renderer
-  (:use #:common-lisp #:rtg-math)
+  (:use #:common-lisp #:rtg-math #:utils)
   (:export :renderer
            :fill-enabled
            :fill-color
