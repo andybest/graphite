@@ -2,12 +2,6 @@
 
 (named-readtables:in-readtable cmu-infix:syntax)
 
-( defconstant +blend-modes+
-  '(:no-blend
-    :blend
-    :add))
-
-
 (defun blend-pixel (mode src dest)
   "Blends the source RGBA pixel onto a destination RGB pixel given a particular blend mode.
    Expects a vec4 for the source and a vec3 for the destination.
@@ -17,13 +11,13 @@
     (:no-blend (subseq src 0 3))
 
     ; Standard alpha blending
-    (:blend (let* ((src-rgb (rtg-math.vectors:swizzle src :xyz))
-                  (alpha (rtg-math:w src))
-                  (alpha-inv (- 1 alpha)))
-              (rtg-math.vectors:+ (rtg-math.vector3:*s src-rgb alpha)
-                                  (rtg-math.vector3:*s dest alpha-inv))))
+    (:blend (let* ((src-rgb (v:swizzle src :xyz))
+                   (alpha (v:w src))
+                   (alpha-inv (- 1 alpha)))
+              (v3:+ (v3:*s src-rgb alpha)
+                    (v3:*s dest alpha-inv))))
 
-    (:add (rtg-math.vectors:+ (rtg-math.vectors:swizzle src :xyz) dest))))
+    (:add (v:+ (v:swizzle src :xyz) dest))))
 
 
 (defun blend-pixel-byte (mode src dest)
@@ -33,8 +27,8 @@
     (:no-blend (subseq src 0 3))
 
     ; Standard alpha blending
-    (:blend (graphite.utils:with-aref (r1 b1 g1) dest
-              (graphite.utils:with-aref (r2 g2 b2 a1) src
+    (:blend (with-aref (r1 b1 g1) dest
+              (with-aref (r2 g2 b2 a1) src
                 (let ((alpha (+ a1 1))
                       (invalpha (- 256 a1)))
                   (vector
@@ -43,8 +37,8 @@
                    #I(((alpha * b2 + invalpha * b1) >> 8) & #xff))))))
 
     ; Additive blending
-    (:add (graphite.utils:with-aref (r1 b1 g1) dest
-            (graphite.utils:with-aref (r2 b2 g2 a2) src
+    (:add (with-aref (r1 b1 g1) dest
+            (with-aref (r2 b2 g2 a2) src
               (vector
                (min 255 (+ r1 r2))
                (min 255 (+ g1 g2))
