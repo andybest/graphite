@@ -1,4 +1,4 @@
-(in-package :utils)
+(in-package #:graphite.utils)
 
 (defmacro with-aref ((&rest indices) array &body body)
   "Allows for destructuring of arrays (like destructuring-bind)"

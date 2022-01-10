@@ -1,6 +1,6 @@
 ;;;; Utilities to create and convert colors in a variety of different color spaces
 
-(in-package :color)
+(in-package #:graphite.color)
 
 (defmacro rgb (r g b)
   "RGB values normalised between 0 and 1"

@@ -1,7 +1,7 @@
 (defpackage #:graphite
   (:use #:common-lisp))
 
-(defpackage #:color
+(defpackage #:graphite.color
   (:use #:common-lisp #:rtg-math)
   (:export :rgb
            :rgba
@@ -11,12 +11,12 @@
            :hsva
            :rgba-to-byte))
 
-(defpackage #:utils
+(defpackage #:graphite.utils
   (:use #:common-lisp)
   (:export :with-aref))
 
-(defpackage #:renderer
-  (:use #:common-lisp #:rtg-math #:utils)
+(defpackage #:graphite.renderer
+  (:use #:common-lisp #:rtg-math #:graphite.utils)
   (:export :renderer
            :fill-enabled
            :fill-color
@@ -24,11 +24,11 @@
            :stroke-color
            :blend-pixel))
 
-(defpackage #:renderer.bitmap
-  (:use #:common-lisp #:color)
+(defpackage #:graphite.renderer.bitmap
+  (:use #:common-lisp #:graphite.color)
   (:export :bitmap-renderer
            :make-bitmap-renderer))
 
 
-(defpackage #:renderer.cairo
-  (:use #:common-lisp #:renderer #:utils))
+(defpackage #:graphite.renderer.cairo
+  (:use #:common-lisp #:graphite.renderer #:graphite.utils))

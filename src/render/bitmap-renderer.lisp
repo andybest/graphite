@@ -1,6 +1,6 @@
-(in-package :renderer.bitmap)
+(in-package #:graphite.renderer.bitmap)
 
-(defclass bitmap-renderer (renderer:renderer)
+(defclass bitmap-renderer (graphite.renderer:renderer)
   ((width :accessor br-width
           :initarg :width)
    (height :accessor br-height
@@ -24,7 +24,7 @@
   "Blends an RGBA pixel into the renderer's RGB graphics buffer according to the current blend mode"
     (multiple-value-bind (r g b) (opticl:pixel (br-image br) y x)
       (setf (opticl:pixel (br-image br) y x)
-            (utils:with-aref (r g b) (renderer:blend-pixel (br-blend-mode br) color (vector r g b))
+            (graphite.utils:with-aref (r g b) (graphite.renderer:blend-pixel (br-blend-mode br) color (vector r g b))
               (values-list (list r g b))))))
 
 
@@ -32,7 +32,7 @@
   (setf (br-blend-mode br) mode))
 
 (defmethod point ((br bitmap-renderer) x y)
-   (br-blend-pixel br x y (color:rgba-to-byte (renderer:stroke-color br))))
+   (br-blend-pixel br x y (graphite.color:rgba-to-byte (graphite.renderer:stroke-color br))))
 
 (defun save-png (br path)
   "Save the renderer's graphics buffer to a PNG file at the specified path"

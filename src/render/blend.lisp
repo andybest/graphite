@@ -1,8 +1,8 @@
-(in-package :renderer)
+(in-package #:graphite.renderer)
 
 (named-readtables:in-readtable cmu-infix:syntax)
 
-(defconstant +blend-modes+
+( defconstant +blend-modes+
   '(:no-blend
     :blend
     :add))
@@ -33,8 +33,8 @@
     (:no-blend (subseq src 0 3))
 
     ; Standard alpha blending
-    (:blend (utils:with-aref (r1 b1 g1) dest
-              (utils:with-aref (r2 g2 b2 a1) src
+    (:blend (graphite.utils:with-aref (r1 b1 g1) dest
+              (graphite.utils:with-aref (r2 g2 b2 a1) src
                 (let ((alpha (+ a1 1))
                       (invalpha (- 256 a1)))
                   (vector
@@ -43,8 +43,8 @@
                    #I(((alpha * b2 + invalpha * b1) >> 8) & #xff))))))
 
     ; Additive blending
-    (:add (utils:with-aref (r1 b1 g1) dest
-            (utils:with-aref (r2 b2 g2 a2) src
+    (:add (graphite.utils:with-aref (r1 b1 g1) dest
+            (graphite.utils:with-aref (r2 b2 g2 a2) src
               (vector
                (min 255 (+ r1 r2))
                (min 255 (+ g1 g2))

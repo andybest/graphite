@@ -1,4 +1,4 @@
-(in-package :renderer)
+(in-package #:graphite.renderer)
 
 (defclass renderer ()
   ((fill :accessor fill-enabled
@@ -6,9 +6,9 @@
    (stroke :accessor stroke-enabled
            :initform t)
    (fill-color :accessor fill-color
-               :initform (color:rgb 0 0 0))
+               :initform (graphite.color:rgb 0 0 0))
    (stroke-color :accessor stroke-color
-                 :initform (color:rgb 0 0 0))))
+                 :initform (graphite.color:rgb 0 0 0))))
 
 (defgeneric set-blend-mode (renderer mode)
   (:documentation "Sets the current blend mode"))

@@ -19,8 +19,7 @@
 (defsystem "graphite/tests"
   :author ""
   :license ""
-  :depends-on ("graphite"
-               "rove")
+  :depends-on (#:graphite #:rove)
   :components ((:module "tests"
                 :components
                 ((:file "main"))))

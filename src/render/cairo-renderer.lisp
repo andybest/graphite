@@ -1,6 +1,6 @@
-(in-package :renderer.cairo)
+(in-package #:graphite.renderer.cairo)
 
-(defclass cairo-renderer (renderer:renderer)
+(defclass cairo-renderer (graphite.renderer:renderer)
   ((context :accessor cr-context
             :initarg :context)
    (matrix-stack :accessor cr-matrix-stack

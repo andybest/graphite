@@ -1,8 +1,8 @@
 (defpackage graphite/tests/main
-  (:use :cl
-        :graphite
-        :rove))
-(in-package :graphite/tests/main)
+  (:use #:cl
+        #:graphite
+        #:rove))
+(in-pack#age #:graphite/tests/main)
 
 ;; NOTE: To run this test file, execute `(asdf:test-system :graphite)' in your Lisp.
 
