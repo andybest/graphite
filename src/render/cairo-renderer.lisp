@@ -86,7 +86,7 @@
   (pop-state cr))
 
 (defmethod ellipse ((cr cairo-renderer) x y width height)
-  (when (> 0 width)
+  (when (> width 0)
     (push-state cr)
     (push-matrix cr)
     (translate cr x y)
@@ -98,7 +98,7 @@
     (do-fill-stroke cr)))
 
 (defmethod ellipse-c ((cr cairo-renderer) x y width height)
-  (when (> 0 width)
+  (when (> width 0)
     (push-state cr)
     (push-matrix cr)
     (translate cr x y)
@@ -132,8 +132,6 @@
 
 (defmethod arc ((cr cairo-renderer) x y radius angle1 angle2)
   (c2:arc x y radius angle1 angle2 (cr-context cr)))
-
-
 
 
 ;;; Matrix operations
