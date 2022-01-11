@@ -2,7 +2,7 @@
   (:use #:common-lisp))
 
 (defpackage #:graphite.color
-  (:use #:common-lisp #:rtg-math)
+  (:use #:common-lisp)
   (:export :rgb
            :rgba
            :hsl
@@ -16,22 +16,19 @@
   (:export :with-aref))
 
 (defpackage #:graphite.renderer
-  (:use #:common-lisp #:rtg-math #:graphite.utils)
-  (:local-nicknames (:v :rtg-math.vectors)
-                    (:v2 :rtg-math.vector2)
-                    (:v3 :rtg-math.vector3)
-                    (:v4 :rtg-math.vector4))
+  (:use #:common-lisp #:graphite.utils)
+
   (:export :renderer
-           :fill-enabled
+   :fill-enabled
            :fill-color
-           :stroke-enabled
+   :stroke-enabled
            :stroke-color
-           :blend-pixel))
+   :blend-pixel))
 
 (defpackage #:graphite.renderer.bitmap
   (:use #:common-lisp #:graphite.renderer #:graphite.color #:graphite.utils)
   (:export :bitmap-renderer
-           :make-bitmap-renderer))
+   :make-bitmap-renderer))
 
 
 (defpackage #:graphite.renderer.cairo

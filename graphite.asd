@@ -2,7 +2,8 @@
   :version "0.1.0"
   :author ""
   :license ""
-  :depends-on (#:alexandria #:cmu-infix #:cl-cairo2 #:dufy #:opticl #:rtg-math)
+  :depends-on (#:alexandria #:cmu-infix #:cl-cairo2 #:dufy #:opticl #:rtg-math #:cricket)
+
   :components ((:module "src"
                 :components
                 ((:file "packages")

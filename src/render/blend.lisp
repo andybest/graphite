@@ -17,7 +17,7 @@
               (v3:+ (v3:*s src-rgb alpha)
                     (v3:*s dest alpha-inv))))
 
-    (:add (v:+ (v:swizzle src :xyz) dest))))
+    (:add (v3:+ (v:swizzle src :xyz) dest))))
 
 
 (defun blend-pixel-byte (mode src dest)
