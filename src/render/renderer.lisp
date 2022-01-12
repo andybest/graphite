@@ -10,6 +10,10 @@
    (stroke-color :accessor stroke-color
                  :initform (graphite.color:rgb 0 0 0))))
 
+(defgeneric renderer-finalize (renderer)
+  (:documentation "Performs any necessary finalization (such as writing the image to disk)"))
+
+
 ;;; Renderer attributes
 
 (defgeneric set-line-cap (renderer cap-type)

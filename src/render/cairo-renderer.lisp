@@ -10,6 +10,10 @@
     (make-instance 'cairo-renderer
                    :context (c2:create-pdf-context output-path width height)))
 
+
+(defmethod renderer-finalize (cr cairo-renderer)
+  (c2:destroy (cr-context cr)))
+
 ;;; Internal utilities
 
 (defun update-stroke-color (cr)

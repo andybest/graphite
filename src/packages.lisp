@@ -1,6 +1,3 @@
-(defpackage #:graphite
-  (:use #:common-lisp))
-
 (defpackage #:graphite.color
   (:use #:common-lisp)
   (:export :rgb
@@ -34,3 +31,14 @@
 (defpackage #:graphite.renderer.cairo
   (:use #:common-lisp #:graphite.renderer #:graphite.utils)
   (:local-nicknames (:c2 :cl-cairo2)))
+
+(uiop:define-package #:graphite
+  (:use #:cl
+        #:graphite.color
+        #:graphite.utils
+        #:graphite.renderer)
+  (:import-from #:graphite.renderer.cairo
+                :make-pdf-renderer)
+  (:reexport :graphite.color
+             :graphite.utils
+             :graphite.renderer))
