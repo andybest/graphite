@@ -15,12 +15,45 @@
 (defpackage #:graphite.renderer
   (:use #:common-lisp #:graphite.utils)
 
-  (:export :renderer
+  (:export
+   :renderer
    :fill-enabled
-           :fill-color
+   :fill-color
    :stroke-enabled
-           :stroke-color
-   :blend-pixel))
+   :stroke-color
+   :renderer-finalize
+   :set-line-cap
+   :set-line-join
+   :set-blend-mode
+   :size
+   :push-state
+   :pop-state
+   :point
+   :line
+   :rect
+   :ellipse
+   :ellipse-c
+   :begin-path
+   :close-path
+   :draw-path
+   :move-to
+   :line-to
+   :curve-to
+   :arc
+   :translate
+   :scale
+   :rotate
+   :push-matrix
+   :pop-matrix
+   :point-v
+   :line-v
+   :rect-v
+   :ellipse-v
+   :ellipse-c-v
+   :move-to-v
+   :line-to-v
+   :curve-to-v
+   :arc-v))
 
 (defpackage #:graphite.renderer.bitmap
   (:use #:common-lisp #:graphite.renderer #:graphite.color #:graphite.utils)
@@ -29,8 +62,18 @@
 
 
 (defpackage #:graphite.renderer.cairo
-  (:use #:common-lisp #:graphite.renderer #:graphite.utils)
-  (:local-nicknames (:c2 :cl-cairo2)))
+  (:use #:common-lisp #:graphite.utils)
+  (:local-nicknames (:c2 :cl-cairo2)
+                    (:r :graphite.renderer)))
+
+(uiop:define-package #:graphite.rng
+  (:use #:common-lisp)
+  (:export :make-opensimplex-2d
+           :make-opensimplex-3d
+           :make-opensimplex-4d
+           :sample-noise))
+  
+   
 
 (uiop:define-package #:graphite
   (:use #:cl
@@ -41,4 +84,6 @@
                 :make-pdf-renderer)
   (:reexport :graphite.color
              :graphite.utils
-             :graphite.renderer))
+             :graphite.renderer)
+  (:export :initial-state-seed
+           :draw-to-file))

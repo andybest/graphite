@@ -2,11 +2,12 @@
   :version "0.1.0"
   :author ""
   :license ""
-  :depends-on (#:alexandria #:cmu-infix #:cl-cairo2 #:dufy #:opticl #:rtg-math #:cricket)
+  :depends-on (#:alexandria #:cmu-infix #:cl-cairo2 #:dufy #:opticl #:rtg-math #:cricket #:cl-pcg)
 
   :components ((:module "src"
                 :components
                 ((:file "packages")
+                 (:file "graphite")
                  (:file "init")
                  (:file "color")
                  (:file "utils")

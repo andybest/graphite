@@ -3,10 +3,10 @@
 (defstruct initial-state
   (seed (:type string)))
 
-(defun draw-to-file (canvas-type output-path renderer-type width height seed draw-func)
+(defun draw-to-file (output-path renderer-type width height seed draw-func)
   (let ((renderer (make-renderer renderer-type output-path width height))
         (state (make-initial-state :seed seed)))
-    (funcall draw-func renderer initial-state)
+    (funcall draw-func renderer state)
     (renderer-finalize renderer)))
 
 (defun make-renderer (renderer-type output-path width height)
