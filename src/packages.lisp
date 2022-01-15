@@ -10,7 +10,13 @@
 
 (defpackage #:graphite.utils
   (:use #:common-lisp)
-  (:export :with-aref))
+  (:export :with-aref
+           :string->hash
+           :iteration-hash
+           :do-until-pred))
+
+(defpackage #:graphite.math
+  (:use #:common-lisp))
 
 (defpackage #:graphite.renderer
   (:use #:common-lisp #:graphite.utils)
@@ -67,11 +73,12 @@
                     (:r :graphite.renderer)))
 
 (uiop:define-package #:graphite.rng
-  (:use #:common-lisp)
+  (:use #:common-lisp #:graphite.utils #:pcg)
   (:export :make-opensimplex-2d
            :make-opensimplex-3d
            :make-opensimplex-4d
-           :sample-noise))
+           :sample-noise)
+  (:reexport :pcg))
   
    
 
