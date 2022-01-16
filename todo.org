@@ -1,4 +1,7 @@
 * Inbox
+** TODO Look at a better solution for generating a PCG seed from the initial hash
+
+[[file:~/dev/lisp/local-projects/graphite/src/graphite.lisp::state (make-initial-state :seed seed :seed-fixnum (sxhash seed)))]]
 ** TODO Create function to get image output directory from envvar
 ** TODO This is likely incredibly inefficient. Need to find a way to work with the multiple values directly.
 

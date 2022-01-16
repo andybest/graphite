@@ -78,11 +78,10 @@
            :make-opensimplex-3d
            :make-opensimplex-4d
            :sample-noise
-           :random-gaussian)
+           :random-gaussian
+           :make-rng)
   (:reexport :pcg))
   
-   
-
 (uiop:define-package #:graphite
   (:use #:cl
         #:graphite.color
@@ -96,5 +95,6 @@
              :graphite.renderer)
 
   (:export :initial-state-seed
+           :initial-state-seed-fixnum
            :draw-to-file
            :render-iterations))

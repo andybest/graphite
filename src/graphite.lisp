@@ -3,6 +3,8 @@
 (defstruct initial-state
   (seed (:type string)))
 
+
+
 (defun draw-to-file (output-path renderer-type width height seed draw-func)
   (let ((renderer (make-renderer renderer-type output-path width height))
         (state (make-initial-state :seed seed)))

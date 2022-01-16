@@ -28,3 +28,5 @@ Uses the Box-Muller transform"
             10.0)
          0.5))))
 
+(defun make-rng (seed)
+  (make-pcg :seed (coerce (sxhash seed) '(unsigned-byte 64))))
