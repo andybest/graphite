@@ -2,7 +2,11 @@
   :version "0.1.0"
   :author ""
   :license ""
-  :depends-on (#:alexandria #:cmu-infix #:cl-cairo2 #:dufy #:opticl #:rtg-math #:cricket #:cl-pcg #:ironclad)
+  :depends-on (#:alexandria #:cmu-infix #:cl-cairo2
+                            #:dufy #:opticl
+                            #:rtg-math #:cricket
+                            #:cl-pcg #:ironclad
+                            #:lparallel #:serapeum)
 
   :components ((:module "src"
                 :components
@@ -12,6 +16,7 @@
                  (:file "color")
                  (:file "utils")
                  (:file "math")
+                 (:file "random")
                  (:file "render/blend")
                  (:file "render/renderer")
                  (:file "render/bitmap-renderer")

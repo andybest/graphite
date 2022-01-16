@@ -77,7 +77,8 @@
   (:export :make-opensimplex-2d
            :make-opensimplex-3d
            :make-opensimplex-4d
-           :sample-noise)
+           :sample-noise
+           :random-gaussian)
   (:reexport :pcg))
   
    
@@ -88,9 +89,12 @@
         #:graphite.utils
         #:graphite.renderer)
   (:import-from #:graphite.renderer.cairo
-                :make-pdf-renderer)
+                :make-pdf-renderer
+                :make-png-renderer)
   (:reexport :graphite.color
              :graphite.utils
              :graphite.renderer)
+
   (:export :initial-state-seed
-           :draw-to-file))
+           :draw-to-file
+           :render-iterations))

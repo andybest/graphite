@@ -11,7 +11,7 @@
                collect (list i `(aref ,a ,n)))
          ,@body))))
 
-(defun string->hash (s &optional (hash-type :md5))
+(defun string->hash (s &key (hash-type :md5))
   "Calculate the HASH-TYPE digest of the string S and return a hex string of the resulting hash"
   (ironclad:byte-array-to-hex-string (ironclad:digest-sequence hash-type (ironclad:ascii-string-to-byte-array s))))
 

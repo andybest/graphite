@@ -1,17 +1,33 @@
 (in-package #:graphite.renderer.cairo)
 
 (defclass cairo-renderer (graphite.renderer:renderer)
-  ((context :accessor cr-context
+  ((type :accessor cr-type
+         :initarg :type)
+   (output-path :accessor cr-output-path
+                :initarg :output-path)
+   (context :accessor cr-context
             :initarg :context)
    (matrix-stack :accessor cr-matrix-stack
                  :initform (make-array 0 :adjustable t :fill-pointer t))))
 
 (defun make-pdf-renderer (output-path width height)
     (make-instance 'cairo-renderer
+                   :type :pdf
+                   :output-path :output-path
                    :context (c2:create-pdf-context output-path width height)))
 
+(defun make-png-renderer (output-path width height)
+  (let* ((surface (c2:create-image-surface :rgb24 width height))
+         (context (c2:create-context surface)))
+    (c2:destroy surface)
+    (make-instance 'cairo-renderer
+                   :type :png
+                   :output-path output-path
+                   :context context)))
 
 (defmethod r:renderer-finalize ((cr cairo-renderer))
+  (case (cr-type cr)
+    (:png (c2:surface-write-to-png (c2:get-target (cr-context cr)) (cr-output-path cr))))
   (c2:destroy (cr-context cr)))
 
 ;;; Internal utilities
@@ -52,8 +68,8 @@
   (c2:set-operator (ecase mode
                      (:no-blend :source)
                      (:blend :over)
-                     (:add :add
-                      (cr-context cr)))))
+                     (:add :add))
+                      (cr-context cr)))
 
 (defmethod r:size ((cr cairo-renderer))
   (vector (c2:width (cr-context cr))
@@ -69,13 +85,13 @@
 ;;; 2D Primitives
 
 (defmethod r:point ((cr cairo-renderer) x y)
-  (when (stroke-enabled cr)
-    (update-fill-color cr)
+  (when (r:stroke-enabled cr)
+    (update-stroke-color cr)
     (c2:rectangle x y 1 1 (cr-context cr))
     (c2:fill-path (cr-context cr))))
 
 (defmethod r:line ((cr cairo-renderer) x1 y1 x2 y2)
-  (when (stroke-enabled cr)
+  (when (r:stroke-enabled cr)
     (r:push-state cr)
     (update-stroke-color cr)
     (c2:move-to x1 y1 (cr-context cr))
