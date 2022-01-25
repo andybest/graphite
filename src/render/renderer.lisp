@@ -147,3 +147,11 @@ Possible options are:
 (defun arc-v (renderer p radius angle1 angle2)
   "Adds an arc of the given RADIUS to the current path centered at the vector P. Begins at ANGLE1 and increases clockwise to ANGLE2"
   (arc renderer (v:x p) (v:y p) radius angle1 angle2))
+
+
+;;; Utils
+
+(defun normalize-size (renderer)
+  "Rescales the canvas so the x axis is normalized to 0.0-1.0, and the y axis is scaled keeping the aspect ratio"
+  (with-aref (w h) (size renderer)
+    (scale renderer w w)))

@@ -59,7 +59,8 @@
    :move-to-v
    :line-to-v
    :curve-to-v
-   :arc-v))
+   :arc-v
+   :normalize-size))
 
 (defpackage #:graphite.renderer.bitmap
   (:use #:common-lisp #:graphite.renderer #:graphite.color #:graphite.utils)
@@ -81,6 +82,27 @@
            :random-gaussian
            :make-rng)
   (:reexport :pcg))
+
+(defpackage #:graphite.datastructures
+  (:use #:common-lisp)
+  (:export :make-grid
+           :grid-width :grid-height
+           :grid-in-bounds-p
+           :grid-coords
+           :grid-sample
+           :grid-neighbors
+           :grid-neighbors-norm))
+
+(defpackage #:graphite.algo
+  (:use #:common-lisp))
+
+(defpackage #:graphite.algo.flowfield
+  (:use #:common-lisp #:graphite.utils))
+
+(defpackage #:graphite.algo.sampling
+  (:use #:common-lisp #:graphite.utils #:graphite.rng)
+  (:local-nicknames (:ds :graphite.datastructures))
+  (:export :poisson-disc))
   
 (uiop:define-package #:graphite
   (:use #:cl

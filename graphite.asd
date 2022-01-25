@@ -16,11 +16,15 @@
                  (:file "color")
                  (:file "utils")
                  (:file "math")
+                 (:file "datastructures")
                  (:file "random")
                  (:file "render/blend")
                  (:file "render/renderer")
                  (:file "render/bitmap-renderer")
-                 (:file "render/cairo-renderer"))))
+                 (:file "render/cairo-renderer")
+                 (:file "algo/flowfield")
+                 (:file "algo/sampling"))))
+
   :description ""
   :in-order-to ((test-op (test-op "graphite/tests"))))
 

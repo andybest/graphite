@@ -8,7 +8,11 @@
    (context :accessor cr-context
             :initarg :context)
    (matrix-stack :accessor cr-matrix-stack
-                 :initform (make-array 0 :adjustable t :fill-pointer t))))
+                 :initform (make-array 0 :adjustable t :fill-pointer t))
+   (stroke-width :accessor cr-stroke-width
+                 :initform 1.0)
+   (px-scale :accessor cr-px-scale
+             :initform 1.0)))
 
 (defun make-pdf-renderer (output-path width height)
     (make-instance 'cairo-renderer
@@ -31,6 +35,12 @@
   (c2:destroy (cr-context cr)))
 
 ;;; Internal utilities
+
+(defun update-sizes (cr)
+  "Update the stroke width and size of point based on the current scale"
+  (let ((px-scale (c2:device-to-user-distance 1 1 (cr-context cr))))
+    (c2:set-line-width (* (cr-stroke-width cr) px-scale) (cr-context cr))
+    (setf (cr-px-scale cr) px-scale)))
 
 (defun update-stroke-color (cr)
   (with-aref (r g b a) (r:stroke-color cr)
@@ -68,8 +78,8 @@
   (c2:set-operator (ecase mode
                      (:no-blend :source)
                      (:blend :over)
-                     (:add :add))
-                      (cr-context cr)))
+                     (:add :add
+                      (cr-context cr)))))
 
 (defmethod r:size ((cr cairo-renderer))
   (vector (c2:width (cr-context cr))
@@ -87,7 +97,8 @@
 (defmethod r:point ((cr cairo-renderer) x y)
   (when (r:stroke-enabled cr)
     (update-stroke-color cr)
-    (c2:rectangle x y 1 1 (cr-context cr))
+    (let ((psize (cr-px-scale cr)))
+      (c2:rectangle x y psize psize (cr-context cr)))
     (c2:fill-path (cr-context cr))))
 
 (defmethod r:line ((cr cairo-renderer) x1 y1 x2 y2)
@@ -105,18 +116,6 @@
   (do-fill-stroke cr)
   (r:pop-state cr))
 
-(defmethod r:ellipse ((cr cairo-renderer) x y width height)
-  (when (> width 0)
-    (r:push-state cr)
-    (r:push-matrix cr)
-    (r:translate cr x y)
-    (r:scale cr 1 (/ height width))
-    (r:translate cr (- x) (- y))
-    (r:translate cr (* width 0.5) (* height 0.5))
-    (c2:arc x y width 0 (* pi 2) (cr-context cr))
-    (r:pop-matrix cr)
-    (do-fill-stroke cr)))
-
 (defmethod r:ellipse-c ((cr cairo-renderer) x y width height)
   (when (> width 0)
     (r:push-state cr)
@@ -124,11 +123,16 @@
     (r:translate cr x y)
     (r:scale cr 1 (/ height width))
     (r:translate cr (- x) (- y))
-    (c2:arc x y width 0 (* pi 2) (cr-context cr))
+    (c2:arc x y (* 0.5 width) 0 (* pi 2) (cr-context cr))
     (r:pop-matrix cr)
     (do-fill-stroke cr)
     (r:pop-state cr)))
 
+(defmethod r:ellipse ((cr cairo-renderer) x y width height)
+  (when (> width 0)
+    (r:push-matrix cr)
+    (r:translate cr (* width 0.25) (* height 0.25))
+    (r:pop-matrix cr)))
 
 ;;; Paths
 
@@ -160,13 +164,15 @@
   (vector-push-extend (c2:get-trans-matrix (cr-context cr)) (cr-matrix-stack cr)))
 
 (defmethod r:pop-matrix ((cr cairo-renderer))
-  (c2:set-trans-matrix (vector-pop (cr-matrix-stack cr)) (cr-context cr)))
+  (c2:set-trans-matrix (vector-pop (cr-matrix-stack cr)) (cr-context cr))
+  (update-sizes cr))
 
 (defmethod r:translate ((cr cairo-renderer) tx ty)
   (c2:translate tx ty (cr-context cr)))
 
 (defmethod r:scale ((cr cairo-renderer) sx sy)
-  (c2:scale sx sy (cr-context cr)))
+  (c2:scale sx sy (cr-context cr))
+  (update-sizes cr))
 
 (defmethod r:rotate ((cr cairo-renderer) angle)
   (c2:rotate angle (cr-context cr)))

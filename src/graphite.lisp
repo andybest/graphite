@@ -3,13 +3,11 @@
 (defstruct initial-state
   (seed (:type string)))
 
-
-
-(defun draw-to-file (output-path renderer-type width height seed draw-func)
-  (let ((renderer (make-renderer renderer-type output-path width height))
-        (state (make-initial-state :seed seed)))
-    (funcall draw-func renderer state)
-    (renderer-finalize renderer)))
+(defmacro draw-to-file (output-path renderer-type width height seed draw-func)
+  `(let ((renderer (make-renderer ,renderer-type ,output-path ,width ,height))
+         (state (make-initial-state :seed ,seed)))
+     (,draw-func renderer state)
+     (renderer-finalize renderer)))
 
 (defun make-renderer (renderer-type output-path width height)
   (ecase renderer-type
@@ -38,19 +36,24 @@
                            (renderer-type-extension renderer-type))))
     (pathname (format nil "~a/~a" base-path filename))))
 
-(defun render-iteration (iteration sketch-name renderer-type width height draw-func)
-  (let* ((seed (iteration-hash iteration :base-string (format nil "~a-" sketch-name)))
-         (path (file-path-for-iteration iteration seed sketch-name renderer-type width height)))
-    (uiop:ensure-pathname path :ensure-directories-exist t)
-    (draw-to-file path renderer-type width height seed draw-func)
-    (print (format nil "Iteration ~d complete" iteration))))
+(defun seed-for-iteration (iteration sketch-name)
+  (iteration-hash iteration :base-string (format nil "~a-" sketch-name)))
 
-(defun render-iterations (iterations sketch-name renderer-type width height draw-func &key parallel)
+(defmacro render-iteration (iteration sketch-name renderer-type width height draw-func)
+  `(let* ((seed (seed-for-iteration ,iteration ,sketch-name))
+          (path (file-path-for-iteration ,iteration seed ,sketch-name ,renderer-type ,width ,height)))
+     (uiop:ensure-pathname path :ensure-directories-exist t)
+     (draw-to-file path ,renderer-type ,width ,height seed ,draw-func)
+     (print (format nil "Iteration ~d complete" ,iteration))))
+
+(defmacro render-iterations (iterations sketch-name renderer-type width height draw-func &key parallel)
   (if parallel
-      (progn
-        (setf lparallel:*kernel* (lparallel:make-kernel (serapeum:count-cpus) :name (format nil "~a render kernel" sketch-name)))
-        (lparallel:pdotimes (i iterations)
-          (render-iteration i sketch-name renderer-type width height draw-func)))
-      (dotimes (i iterations)
-        (render-iteration i sketch-name renderer-type width height draw-func)))
-  (print (format nil "Done rendering ~d iterations of ~a" iterations sketch-name)))
+      `(progn
+         (setf lparallel:*kernel* (lparallel:make-kernel (serapeum:count-cpus) :name (format nil "~a render kernel" ,sketch-name)))
+         (lparallel:pdotimes (i ,iterations)
+           (render-iteration i ,sketch-name ,renderer-type ,width ,height ,draw-func))
+         (print (format nil "Done rendering ~d iterations of ~a" ,iterations ,sketch-name)))
+      `(progn
+         (dotimes (i ,iterations)
+           (render-iteration i ,sketch-name ,renderer-type ,width ,height ,draw-func))
+         (print (format nil "Done rendering ~d iterations of ~a" ,iterations ,sketch-name)))))
