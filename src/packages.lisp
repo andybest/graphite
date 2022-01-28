@@ -97,7 +97,16 @@
   (:use #:common-lisp))
 
 (defpackage #:graphite.algo.flowfield
-  (:use #:common-lisp #:graphite.utils))
+  (:use #:common-lisp #:graphite.utils #:graphite.datastructures)
+  (:export :make
+           :width
+           :height
+           :get-at
+           :set-at
+           :get-nearest
+           :get-nearest-v
+           :normalize
+           :visualize))
 
 (defpackage #:graphite.algo.sampling
   (:use #:common-lisp #:graphite.utils #:graphite.rng)
