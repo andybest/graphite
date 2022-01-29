@@ -20,6 +20,12 @@
                    :output-path :output-path
                    :context (c2:create-pdf-context output-path width height)))
 
+(defun make-svg-renderer (output-path width height)
+  (make-instance 'cairo-renderer
+                 :type :svg
+                 :output-path :output-path
+                 :context (c2:create-svg-context output-path width height)))
+
 (defun make-png-renderer (output-path width height)
   (let* ((surface (c2:create-image-surface :rgb24 width height))
          (context (c2:create-context surface)))

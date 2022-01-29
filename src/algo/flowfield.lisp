@@ -4,11 +4,11 @@
   "Create a flowfield with dimensions WIDTHxHEIGHT"
   (make-grid width height :element-type 'simple-array :initial-element (v2:make 0.0 0.0)))
 
-(defun width (f)
+(defun field-width (f)
   "Returns the width of the flow field F."
   (grid-width f))
 
-(defun height (f)
+(defun field-height (f)
   "Returns the height of the flow field F."
   (grid-height f))
 
@@ -41,10 +41,10 @@
   (graphite.renderer:translate r x y)
   ;; (graphite.renderer:scale r width height)
 
-  (let* ((fw (width f))
-         (fh (height f))
-         (xspacing (/ width fw))
-         (yspacing (/ height fh)))
+  (let* ((fw (field-width f))
+         (fh (field-height f))
+         (xspacing (/ width (- fw 1)))
+         (yspacing (/ height (- fh 1))))
     (loop for ix from 0 below fw do
       (loop for iy from 0 below fh do
         (let ((px (* xspacing ix))

@@ -120,7 +120,8 @@
         #:graphite.renderer)
   (:import-from #:graphite.renderer.cairo
                 :make-pdf-renderer
-                :make-png-renderer)
+                :make-png-renderer
+                :make-svg-renderer)
   (:reexport :graphite.color
              :graphite.utils
              :graphite.renderer)

@@ -12,13 +12,15 @@
 (defun make-renderer (renderer-type output-path width height)
   (ecase renderer-type
     (:pdf (make-pdf-renderer output-path width height))
-    (:png (make-png-renderer output-path width height))))
+    (:png (make-png-renderer output-path width height))
+    (:svg (make-svg-renderer output-path width height))))
 
 (defun renderer-type-extension (renderer-type)
   "Returns the file extension for the given RENDERER-TYPE."
   (ecase renderer-type
     (:pdf "pdf")
-    (:png "png")))
+    (:png "png")
+    (:svg "svg")))
 
 (defun graphite-render-dir (&optional subdir)
   (let* ((base-path (uiop:getenv-absolute-directory "GRAPHITE_RENDER_DIR"))
